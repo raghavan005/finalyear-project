@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import "./DoctorLogin.css";
 import logo from "../../images/Screenshot_2025-02-26_135248-removebg-preview.png";
 import googleLogo from "../../images/icons8-google-400.png";
+import Waves from "../welcome/animation/lightining/waves";
 import {
   auth,
   signInWithEmailAndPassword,
@@ -12,7 +13,7 @@ import {
   getFirestore,
   doc,
   getDoc,
-} from "../Login/firebase/firebase"; // Adjust path as needed
+} from "../Login/firebase/firebase";
 
 const DoctorLogin: React.FC = () => {
   const [email, setEmail] = useState<string>("");
@@ -26,7 +27,11 @@ const DoctorLogin: React.FC = () => {
     setIsLoading(true);
     setErrorMessage(null);
     try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
       const user = userCredential.user;
       if (user) {
         const db = getFirestore();
@@ -34,9 +39,9 @@ const DoctorLogin: React.FC = () => {
         const doctorDoc = await getDoc(doctorDocRef);
 
         if (doctorDoc.exists()) {
-          navigate("/doctor-dashboard"); // Redirect to doctor-dashboard if details exist
+          navigate("/doctor-dashboard");
         } else {
-          navigate("/doctor-details"); // Redirect to doctor-details if details do not exist
+          navigate("/doctor-details");
         }
       }
     } catch (error: any) {
@@ -59,9 +64,9 @@ const DoctorLogin: React.FC = () => {
         const doctorDoc = await getDoc(doctorDocRef);
 
         if (doctorDoc.exists()) {
-          navigate("/doctor-dashboard"); // Redirect to doctor-dashboard if details exist
+          navigate("/doctor-dashboard");
         } else {
-          navigate("/doctor-details"); // Redirect to doctor-details if details do not exist
+          navigate("/doctor-details");
         }
       }
     } catch (error: any) {
@@ -76,20 +81,23 @@ const DoctorLogin: React.FC = () => {
   };
 
   return (
-    <motion.div
-      className="login-container"
-      initial={{ opacity: 0, scale: 0.9 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.5 }}
-    >
-      <motion.img
-        src={logo}
-        alt="Providance Logo"
-        className="login-logo"
-        initial={{ y: -20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.5, delay: 0.2 }}
-      />
+    <div className="login-container">
+      <div className="waves-background">
+        <Waves
+          lineColor="#fff"
+          backgroundColor="rgba(255, 255, 255, 0.2)"
+          waveSpeedX={0.02}
+          waveSpeedY={0.01}
+          waveAmpX={40}
+          waveAmpY={20}
+          friction={0.9}
+          tension={0.01}
+          maxCursorMove={120}
+          xGap={12}
+          yGap={36}
+        />
+      </div>
+
       <motion.form
         className="login-form"
         onSubmit={handleSubmit}
@@ -97,6 +105,14 @@ const DoctorLogin: React.FC = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.3 }}
       >
+        <motion.img
+          src={logo}
+          alt="Providance Logo"
+          className="login-logo"
+          initial={{ y: -20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        />
         <h2>Doctor Login</h2>
         {errorMessage && <p className="error-message">{errorMessage}</p>}
         <div className="form-group">
@@ -151,7 +167,7 @@ const DoctorLogin: React.FC = () => {
           Register
         </motion.button>
       </motion.form>
-    </motion.div>
+    </div>
   );
 };
 

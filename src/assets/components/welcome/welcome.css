@@ -37,7 +37,7 @@ html, body, #root {
   background: rgba(255, 255, 255, 0.2); /* More transparency */
   border-radius: 15px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(10px); /* Frosted glass effect */
+  backdrop-filter: blur(3px); /* Frosted glass effect */
   -webkit-backdrop-filter: blur(10px); /* For Safari */
   border: 1px solid rgba(255, 255, 255, 0.3); /* Subtle border for glass effect */
   box-sizing: border-box;
@@ -98,11 +98,15 @@ html, body, #root {
 .feature-card {
   text-align: center;
   padding: 20px;
-  border-radius: 10px;
-  background-color: #f0f0f0;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.2); /* Semi-transparent background */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Soft shadow */
+  backdrop-filter: blur(10px); /* Glass effect */
+  -webkit-backdrop-filter: blur(10px); /* Safari support */
+  border: 1px solid rgba(255, 255, 255, 0.3); /* Subtle border */
   max-width: 300px;
   width: 100%;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .feature-icon {
@@ -113,13 +117,15 @@ html, body, #root {
 .feature-card h3 {
   margin-bottom: 10px;
   color: #333;
+  
 }
 
 .feature-card p {
   color: #666;
+  
 }
 .logo {
-  width: 200px; /* Adjust size as needed */
+  width: 280px; /* Adjust size as needed */
   height: auto;
   display: block;
   margin: 0 auto 20px; /* Center logo and add spacing below */

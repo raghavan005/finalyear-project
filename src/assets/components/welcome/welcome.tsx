@@ -1,23 +1,35 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { FaUserShield, FaUserMd, FaHeartbeat } from "react-icons/fa";
 import "./welcome.css"; // Import CSS file
 import logo from "../../images/Screenshot_2025-02-26_135248-removebg-preview.png"; // Import your logo
 import VariableProximity from "./animation/BlurText";
-import { useRef } from "react";
-
+import Waves from "./animation/lightining/waves"; // Import the Waves component
 
 const WelcomePage: React.FC = () => {
   const navigate = useNavigate();
-
-  const handleAdminLogin = () => navigate("/admin/login");
-  const handleDoctorLogin = () => navigate("/doctor/login");
   const containerRef = useRef(null);
- 
 
   return (
     <div className="welcome-container">
+      {/* Waves Background */}
+      <div className="waves-background">
+        <Waves
+          lineColor="#fff"
+          backgroundColor="rgba(255, 255, 255, 0.2)"
+          waveSpeedX={0.02}
+          waveSpeedY={0.01}
+          waveAmpX={40}
+          waveAmpY={20}
+          friction={0.9}
+          tension={0.01}
+          maxCursorMove={120}
+          xGap={12}
+          yGap={36}
+        />
+      </div>
+
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -38,10 +50,8 @@ const WelcomePage: React.FC = () => {
         <h1 className="welcome-title">
           <div ref={containerRef} style={{ position: "relative" }}>
             <VariableProximity
-              label={
-                "Welcome to the Future of Healthcare Monitoring – Where Precision MeetsEfficiency"
-              }
-              className={"variable-proximity-demo"}
+              label="Welcome to the Future of Healthcare Monitoring – Where Precision Meets Efficiency"
+              className="variable-proximity-demo"
               fromFontVariationSettings="'wght' 400, 'opsz' 9"
               toFontVariationSettings="'wght' 1000, 'opsz' 40"
               containerRef={containerRef}
@@ -58,22 +68,29 @@ const WelcomePage: React.FC = () => {
           transition={{ duration: 1 }}
           className="welcome-description"
         >
-          Monitor real-time healthcare services, track doctor attendance, and
-          manage facilities efficiently.
+          <VariableProximity
+            label=" Monitor real-time healthcare services, track doctor attendance, and manage facilities efficiently."
+            className="variable-proximity-demo"
+            fromFontVariationSettings="'wght' 400, 'opsz' 9"
+            toFontVariationSettings="'wght' 1000, 'opsz' 40"
+            containerRef={containerRef}
+            radius={100}
+            falloff="linear"
+          />
         </motion.p>
 
         {/* Login Buttons */}
         <div className="button-container">
           <motion.button
             className="admin-button"
-            onClick={handleAdminLogin}
+            onClick={() => navigate("/admin/login")}
             whileHover={{ scale: 1.1 }}
           >
             <FaUserShield size={24} /> Admin Login
           </motion.button>
           <motion.button
             className="doctor-button"
-            onClick={handleDoctorLogin}
+            onClick={() => navigate("/doctor/login")}
             whileHover={{ scale: 1.1 }}
           >
             <FaUserMd size={24} /> Doctor Login
@@ -91,7 +108,15 @@ const WelcomePage: React.FC = () => {
             <FaHeartbeat size={40} className="feature-icon" />
             <h3>Live Monitoring</h3>
             <p>
-              Get real-time updates on doctor availability and patient stats.
+              <VariableProximity
+                label=" Get real-time updates on doctor availability and patient stats."
+                className="variable-proximity-demo"
+                fromFontVariationSettings="'wght' 400, 'opsz' 9"
+                toFontVariationSettings="'wght' 1000, 'opsz' 40"
+                containerRef={containerRef}
+                radius={100}
+                falloff="linear"
+              />
             </p>
           </motion.div>
           <motion.div
@@ -102,7 +127,18 @@ const WelcomePage: React.FC = () => {
           >
             <FaUserMd size={40} className="feature-icon" />
             <h3>Doctor Tracking</h3>
-            <p>Check attendance records and manage shifts effortlessly.</p>
+            <p>
+              {" "}
+              <VariableProximity
+                label="Check attendance records and manage shifts effortlessly."
+                className="variable-proximity-demo"
+                fromFontVariationSettings="'wght' 400, 'opsz' 9"
+                toFontVariationSettings="'wght' 1000, 'opsz' 40"
+                containerRef={containerRef}
+                radius={100}
+                falloff="linear"
+              />
+            </p>
           </motion.div>
         </div>
       </motion.div>
