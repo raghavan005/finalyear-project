@@ -73,119 +73,122 @@ const RegisterForm: React.FC = () => {
   };
 
   return (
-    <div className="login-container">
-      {/* Waves Background */}
-      <div className="waves-background">
-        <Waves
-          lineColor="#fff"
-          backgroundColor="rgba(255, 255, 255, 0.2)"
-          waveSpeedX={0.02}
-          waveSpeedY={0.01}
-          waveAmpX={40}
-          waveAmpY={20}
-          friction={0.9}
-          tension={0.01}
-          maxCursorMove={120}
-          xGap={12}
-          yGap={36}
-        />
-      </div>
-
-      <motion.div
-        className="login-content"
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-      >
-        <motion.form
-          className="login-form"
-          onSubmit={handleRegister}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-        >
-          <motion.img
-            src={logo}
-            alt="Providance Logo"
-            className="login-logo"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5 }}
+    <div className="register-page">
+      <div className="login-container">
+        {/* Waves Background */}
+        <div className="waves-background">
+          <Waves
+            lineColor="#fff"
+            backgroundColor="rgba(255, 255, 255, 0.2)"
+            waveSpeedX={0.02}
+            waveSpeedY={0.01}
+            waveAmpX={40}
+            waveAmpY={20}
+            friction={0.9}
+            tension={0.01}
+            maxCursorMove={120}
+            xGap={12}
+            yGap={36}
           />
+        </div>
 
-          <h2>Register</h2>
-          {errorMessage && <p className="error-message">{errorMessage}</p>}
-
-          <div className="form-group">
-            <label htmlFor="email">Email</label>
-            <input
-              type="email"
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="confirmPassword">Confirm Password</label>
-            <input
-              type="password"
-              id="confirmPassword"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              required
-            />
-          </div>
-
-          <motion.button
-            type="submit"
-            className="login-button"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            disabled={isLoading}
-          >
-            {isLoading ? "Registering..." : "Register"}
-          </motion.button>
-
-          <motion.div
-            className="google-signin-container"
-            onClick={handleGoogleSignIn}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+        <motion.div
+          className="login-content"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+        >
+          <motion.form
+            className="login-form"
+            onSubmit={handleRegister}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
           >
             <motion.img
-              src={googleLogo}
-              alt="Google Sign-In"
-              className="google-signin"
+              src={logo}
+              alt="Providance Logo"
+              className="login-logo"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5 }}
             />
-            <h1 className="google-signin-text">Sign up with Google</h1>
-          </motion.div>
 
-          <motion.button
-            type="button"
-            className="register-button"
-            onClick={() => navigate(redirectPath)}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            Already have an account? Login
-          </motion.button>
-        </motion.form>
-      </motion.div>
+            <h2>Register</h2>
+            {errorMessage && <p className="error-message">{errorMessage}</p>}
+
+            <div className="form-group">
+              <label htmlFor="email">Email</label>
+              <input
+                type="email"
+                id="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="password">Password</label>
+              <input
+                type="password"
+                id="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="confirmPassword">Confirm Password</label>
+              <input
+                type="password"
+                id="confirmPassword"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                required
+              />
+            </div>
+
+            <motion.button
+              type="submit"
+              className="login-button"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              disabled={isLoading}
+            >
+              {isLoading ? "Registering..." : "Register"}
+            </motion.button>
+
+            <motion.div
+              className="google-signin-container"
+              onClick={handleGoogleSignIn}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <motion.img
+                src={googleLogo}
+                alt="Google Sign-In"
+                className="google-signin"
+              />
+              <h1 className="google-signin-text">Sign up with Google</h1>
+            </motion.div>
+
+            <motion.button
+              type="button"
+              className="register-button"
+              onClick={() => navigate(redirectPath)}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Already have an account? Login
+            </motion.button>
+          </motion.form>
+        </motion.div>
+      </div>
     </div>
   );
+
 };
 
 export default RegisterForm;

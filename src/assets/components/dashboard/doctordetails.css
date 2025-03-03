@@ -1,16 +1,21 @@
 .doctor-details-container {
   width: 40%;
   margin: auto;
-  background: white;
+  background: rgba(255, 255, 255, 0.1);
   padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   text-align: center;
+  color: white;
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .doctor-details-container h2 {
   font-size: 24px;
   margin-bottom: 1rem;
+  color: white;
 }
 
 .doctor-details-form {
@@ -27,13 +32,21 @@ label {
   font-weight: bold;
   display: block;
   margin-bottom: 5px;
+  color: white !important;
 }
 
-input {
+input,
+select {
   width: 100%;
   padding: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid rgba(255, 255, 255, 0.4);
   border-radius: 5px;
+  color: black;
+  background: white; /* Changed input background to white */
+}
+
+input::placeholder {
+  color: #555;
 }
 
 .error-message {
@@ -42,13 +55,18 @@ input {
 }
 
 .submit-button {
-  background: #007bff;
+  background: rgb(79, 172, 254);
   color: white;
   padding: 10px;
   border: none;
-  border-radius: 5px;
+  border-radius: 10px;
   cursor: pointer;
   font-size: 16px;
+  transition: 0.3s;
+}
+
+.submit-button:hover {
+  background: rgba(0, 198, 255, 0.8);
 }
 
 .submit-button:disabled {

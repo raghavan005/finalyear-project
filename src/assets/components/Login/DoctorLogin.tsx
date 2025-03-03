@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import "./DoctorLogin.css";
+import "./DoctorLogin.css"; // Keep this, as we'll modify it
 import logo from "../../images/Screenshot_2025-02-26_135248-removebg-preview.png";
 import googleLogo from "../../images/icons8-google-400.png";
 import Waves from "../welcome/animation/lightining/waves";
@@ -81,8 +81,8 @@ const DoctorLogin: React.FC = () => {
   };
 
   return (
-    <div className="login-container">
-      <div className="waves-background">
+    <div className="doctorLogin_container">
+      <div className="doctorLogin_wavesBackground">
         <Waves
           lineColor="#fff"
           backgroundColor="rgba(255, 255, 255, 0.2)"
@@ -99,7 +99,7 @@ const DoctorLogin: React.FC = () => {
       </div>
 
       <motion.form
-        className="login-form"
+        className="doctorLogin_form"
         onSubmit={handleSubmit}
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -108,36 +108,44 @@ const DoctorLogin: React.FC = () => {
         <motion.img
           src={logo}
           alt="Providance Logo"
-          className="login-logo"
+          className="doctorLogin_logo"
           initial={{ y: -20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.2 }}
         />
-        <h2>Doctor Login</h2>
-        {errorMessage && <p className="error-message">{errorMessage}</p>}
-        <div className="form-group">
-          <label htmlFor="email">Email</label>
+        <h2 className="doctorLogin_title">Doctor Login</h2>
+        {errorMessage && (
+          <p className="doctorLogin_errorMessage">{errorMessage}</p>
+        )}
+        <div className="doctorLogin_formGroup">
+          <label htmlFor="email" className="doctorLogin_label">
+            Email
+          </label>
           <input
             type="email"
             id="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
+            className="doctorLogin_input"
           />
         </div>
-        <div className="form-group">
-          <label htmlFor="password">Password</label>
+        <div className="doctorLogin_formGroup">
+          <label htmlFor="password" className="doctorLogin_label">
+            Password
+          </label>
           <input
             type="password"
             id="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
+            className="doctorLogin_input"
           />
         </div>
         <motion.button
           type="submit"
-          className="login-button"
+          className="doctorLogin_button"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           disabled={isLoading}
@@ -145,7 +153,7 @@ const DoctorLogin: React.FC = () => {
           {isLoading ? "Logging in..." : "Login"}
         </motion.button>
         <motion.div
-          className="google-signin-container"
+          className="doctorLogin_googleSigninContainer"
           onClick={handleGoogleSignIn}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
@@ -153,13 +161,13 @@ const DoctorLogin: React.FC = () => {
           <motion.img
             src={googleLogo}
             alt="Google Sign-In"
-            className="google-signin"
+            className="doctorLogin_googleSigninImage"
           />
-          <h1 className="google-signin-text">Sign in with Google</h1>
+          <h1 className="doctorLogin_googleSigninText">Sign in with Google</h1>
         </motion.div>
         <motion.button
           type="button"
-          className="register-button"
+          className="doctorLogin_registerButton"
           onClick={handleRegisterClick}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}

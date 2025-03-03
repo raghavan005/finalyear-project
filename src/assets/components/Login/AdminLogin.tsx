@@ -12,7 +12,7 @@ import {
   GoogleAuthProvider,
 } from "./firebase/firebase";
 
-const LoginForm: React.FC = () => {
+const AdminLoginForm: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -25,10 +25,10 @@ const LoginForm: React.FC = () => {
     setErrorMessage(null);
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      console.log("Logged in successfully!");
+      console.log("Admin logged in successfully!");
       navigate("/dashboard");
     } catch (error: any) {
-      console.error("Login failed:", error.message);
+      console.error("Admin login failed:", error.message);
       setErrorMessage(error.message);
     }
     setIsLoading(false);
@@ -54,9 +54,9 @@ const LoginForm: React.FC = () => {
   };
 
   return (
-    <div className="login-container">
+    <div className="admin-login-container">
       {/* Waves Background */}
-      <div className="waves-background">
+      <div className="admin-waves-background">
         <Waves
           lineColor="#fff"
           backgroundColor="rgba(255, 255, 255, 0.2)"
@@ -72,9 +72,9 @@ const LoginForm: React.FC = () => {
         />
       </div>
 
-      {/* Login Form */}
+      {/* Admin Login Form */}
       <motion.div
-        className="login-form"
+        className="admin-login-form"
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5 }}
@@ -82,21 +82,23 @@ const LoginForm: React.FC = () => {
         <motion.img
           src={logo}
           alt="Providance Logo"
-          className="login-logo"
+          className="admin-login-logo"
           initial={{ y: -20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.2 }}
         />
         <motion.form
-          className="login-form-content"
+          className="admin-login-form-content"
           onSubmit={handleSubmit}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.3 }}
         >
           <h2>Admin Login</h2>
-          {errorMessage && <p className="error-message">{errorMessage}</p>}
-          <div className="form-group">
+          {errorMessage && (
+            <p className="admin-error-message">{errorMessage}</p>
+          )}
+          <div className="admin-form-group">
             <label>Email</label>
             <input
               type="email"
@@ -105,7 +107,7 @@ const LoginForm: React.FC = () => {
               required
             />
           </div>
-          <div className="form-group">
+          <div className="admin-form-group">
             <label>Password</label>
             <input
               type="password"
@@ -116,7 +118,7 @@ const LoginForm: React.FC = () => {
           </div>
           <motion.button
             type="submit"
-            className="login-button"
+            className="admin-login-button"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             disabled={isLoading}
@@ -124,7 +126,7 @@ const LoginForm: React.FC = () => {
             {isLoading ? "Logging in..." : "Login"}
           </motion.button>
           <motion.div
-            className="google-signin-container"
+            className="admin-google-signin-container"
             onClick={handleGoogleSignIn}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -132,13 +134,13 @@ const LoginForm: React.FC = () => {
             <motion.img
               src={googleLogo}
               alt="Google Sign-In"
-              className="google-signin"
+              className="admin-google-signin"
             />
-            <p className="google-signin-text">Sign in with Google</p>
+            <p className="admin-google-signin-text">Sign in with Google</p>
           </motion.div>
           <motion.button
             type="button"
-            className="register-button"
+            className="admin-register-button"
             onClick={handleRegisterClick}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -151,4 +153,4 @@ const LoginForm: React.FC = () => {
   );
 };
 
-export default LoginForm;
+export default AdminLoginForm;

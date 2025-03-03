@@ -1,5 +1,5 @@
 /* Full-page background with gradient */
-.login-container {
+.doctorLogin_container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -9,13 +9,13 @@
 }
 
 /* Logo Styling */
-.login-logo {
+.doctorLogin_logo {
   width: 190px;
   margin-bottom: 10px;
 }
 
 /* Glassmorphic Login Card */
-.login-form {
+.doctorLogin_form {
   background: rgba(255, 255, 255, 0.1); /* Semi-transparent white */
   padding: 30px;
   border-radius: 15px;
@@ -31,19 +31,19 @@
 }
 
 /* Form Fields */
-.form-group {
+.doctorLogin_formGroup {
   margin-bottom: 15px;
   text-align: left;
 }
 
-.form-group label {
+.doctorLogin_formGroup label {
   display: block;
   font-weight: bold;
   margin-bottom: 5px;
   color: white; /* Improved contrast */
 }
 
-.form-group input {
+.doctorLogin_formGroup input {
   width: 100%;
   padding: 10px;
   border: 1px solid rgba(255, 255, 255, 0.4);
@@ -53,7 +53,7 @@
 }
 
 /* Buttons */
-.login-button {
+.doctorLogin_button {
   width: 100%;
   padding: 10px;
   border: none;
@@ -65,18 +65,18 @@
   transition: 0.3s;
 }
 
-.login-button:hover {
+.doctorLogin_button:hover {
   background: rgba(0, 198, 255, 0.8);
 }
 
 /* Google Sign-in */
-.google-signin {
+.doctorLogin_googleSigninImage {
   width: 80px;
   margin-top: 15px;
   cursor: pointer;
 }
 
-.google-signin-text {
+.doctorLogin_googleSigninText {
   font-size: 15px;
   color: white;
 }

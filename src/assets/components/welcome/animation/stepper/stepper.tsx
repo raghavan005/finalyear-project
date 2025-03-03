@@ -7,6 +7,7 @@ import React, {
   ReactNode,
 } from "react";
 import { motion, AnimatePresence, Variants } from "framer-motion";
+import Waves from "../lightining/waves";
 
 import "./stepper.css";
 
@@ -87,6 +88,22 @@ export default function Stepper({
 
   return (
     <div className="outer-container" {...rest}>
+      <div className="waves-background">
+        <Waves
+          lineColor="#fff"
+          backgroundColor="rgba(255, 255, 255, 0.2)"
+          waveSpeedX={0.02}
+          waveSpeedY={0.01}
+          waveAmpX={40}
+          waveAmpY={20}
+          friction={0.9}
+          tension={0.01}
+          maxCursorMove={120}
+          xGap={12}
+          yGap={36}
+        />
+      </div>
+      
       <div
         className={`step-circle-container ${stepCircleContainerClassName}`}
         style={{ border: "1px solid #222" }}
