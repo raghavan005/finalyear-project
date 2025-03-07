@@ -1,147 +1,81 @@
-import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import React, { useState } from "react";
+import { FaUserCircle } from "react-icons/fa";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { FaUserMd, FaCalendarCheck, FaUsers } from "react-icons/fa";
-import { auth } from "../Login/firebase/firebase"; // Adjust path as needed
-import { signOut } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
+import "./doctordash.css";
+import img from "../../images/Screenshot_2025-02-26_135248-removebg-preview.png";
 
-const Dashboard: React.FC = () => {
-  const [user, setUser] = useState<any>(null); // Use 'any' or a more specific type
-  const navigate = useNavigate();
+const Home = () => <div className="content-container">Home Content</div>;
+const Attendance = () => (
+  <div className="content-container">Attendance Content</div>
+);
+const Report = () => <div className="content-container">Report Content</div>;
+const PatientDetails = () => (
+  <div className="content-container">Patient Details Content</div>
+);
 
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      setUser(user);
-    });
+const HealthConnectDashboard = () => {
+  const [activeTab, setActiveTab] = useState("Home");
 
-    return () => unsubscribe();
-  }, []);
-
-  const handleLogout = async () => {
-    try {
-      await signOut(auth);
-      navigate("/"); // Redirect to welcome page
-    } catch (error) {
-      console.error("Logout failed:", error);
+  const renderContent = () => {
+    switch (activeTab) {
+      case "Home":
+        return <Home />;
+      case "Attendance":
+        return <Attendance />;
+      case "Report":
+        return <Report />;
+      case "PatientDetails":
+        return <PatientDetails />;
+      default:
+        return <Home />;
     }
   };
 
-  if (!user) {
-    return <div>Loading...</div>; // Or redirect to login
-  }
-
   return (
-    <div className="d-flex">
+    <div className="dashboard-container">
       {/* Sidebar */}
-      <div className="sidebar bg-dark text-white p-3 vh-100">
-        <h3 className="mb-4">Doctor Dashboard</h3>
-        <ul className="nav flex-column">
-          <li className="nav-item">
-            <a href="#" className="nav-link text-white">
-              Home
-            </a>
-          </li>
-          <li className="nav-item">
-            <a href="#" className="nav-link text-white">
-              Appointments
-            </a>
-          </li>
-          <li className="nav-item">
-            <a href="#" className="nav-link text-white">
-              Patients
-            </a>
-          </li>
-          <li className="nav-item">
-            <a href="#" className="nav-link text-white">
-              Reports
-            </a>
-          </li>
-        </ul>
+      <div className="sidebar">
+        <h2 className="sidebar-title">Doctor Dashboard</h2>
+        <div className="sidebar-menu">
+          <button className="sidebar-item" onClick={() => setActiveTab("Home")}>
+            Home
+          </button>
+          <button
+            className="sidebar-item"
+            onClick={() => setActiveTab("Attendance")}
+          >
+            Attendance
+          </button>
+          <button
+            className="sidebar-item"
+            onClick={() => setActiveTab("Report")}
+          >
+            Report
+          </button>
+          <button
+            className="sidebar-item"
+            onClick={() => setActiveTab("PatientDetails")}
+          >
+            Patient Details
+          </button>
+        </div>
       </div>
 
       {/* Main Content */}
-      <div className="container p-4">
-        <div className="d-flex justify-content-between align-items-center mb-4">
-          <div>
-            <h2 className="mb-0">Welcome, {user.email}</h2>
+      <div className="main-content">
+        {/* Top Navigation Bar */}
+        <div className="navbar-custom">
+          <div className="navbar-logo-container">
+            <img src={img} alt="Health Connect" className="navbar-logo" />
           </div>
-          <div>
-            <button className="btn btn-danger" onClick={handleLogout}>
-              Logout
-            </button>
-          </div>
+          <FaUserCircle className="fs-1 text-dark" />
         </div>
 
-        {/* User Profile Section */}
-        <div className="mb-4">
-          <h4>User Profile</h4>
-          <p>
-            <strong>Email:</strong> {user.email}
-          </p>
-          {/* Add more user details as needed */}
-        </div>
-
-        {/* Animated Cards */}
-        <div className="row">
-          <motion.div className="col-md-4" whileHover={{ scale: 1.05 }}>
-            <div className="card shadow-sm p-3 text-center">
-              <FaUserMd size={40} className="text-primary mb-2" />
-              <h5>Total Patients</h5>
-              <p className="fs-4">120</p>
-            </div>
-          </motion.div>
-
-          <motion.div className="col-md-4" whileHover={{ scale: 1.05 }}>
-            <div className="card shadow-sm p-3 text-center">
-              <FaCalendarCheck size={40} className="text-success mb-2" />
-              <h5>Appointments Today</h5>
-              <p className="fs-4">15</p>
-            </div>
-          </motion.div>
-
-          <motion.div className="col-md-4" whileHover={{ scale: 1.05 }}>
-            <div className="card shadow-sm p-3 text-center">
-              <FaUsers size={40} className="text-warning mb-2" />
-              <h5>Attendance</h5>
-              <p className="fs-4">90%</p>
-            </div>
-          </motion.div>
-        </div>
-
-        {/* Recent Activities Table */}
-        <div className="mt-5">
-          <h4>Recent Activities</h4>
-          <table className="table table-striped">
-            <thead>
-              <tr>
-                <th>Patient</th>
-                <th>Appointment Time</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>John Doe</td>
-                <td>10:30 AM</td>
-                <td className="text-success">Completed</td>
-              </tr>
-              <tr>
-                <td>Jane Smith</td>
-                <td>11:00 AM</td>
-                <td className="text-warning">Pending</td>
-              </tr>
-              <tr>
-                <td>Alex Johnson</td>
-                <td>12:00 PM</td>
-                <td className="text-danger">Cancelled</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        {/* Content Area */}
+        <main className="content-area">{renderContent()}</main>
       </div>
     </div>
   );
 };
 
-export default Dashboard;
+export default HealthConnectDashboard;
