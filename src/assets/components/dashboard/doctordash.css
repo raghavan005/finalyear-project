@@ -1,59 +1,157 @@
+/* Overall Dashboard Layout */
 .dashboard-container {
   display: flex;
-  height: 100vh;
+  height: 100vh; /* Full viewport height */
 }
 
+/* Sidebar Styling */
 .sidebar {
-  width: 8.66%;
-  height: 100%; 
-  background-color: #343a40;
-  color: white;
-}
-
-.navbar-custom {
-  width: 100%;
-  height: 111px;
-  background-color: rgb(89, 171, 225);
+  width: 8.66%; /* Fixed width for sidebar */
+  height: 100%; /* Full height */
+  background-color: rgb(89, 171, 225); /* Sidebar background color */
+  color: white; /* White text */
   display: flex;
-  justify-content: space-between; 
-  align-items: center;
-  padding: 0 1rem;
+  flex-direction: column;
+  border-right: 1px solid white; /* Add right border, 1px width, white color */
 }
 
-.navbar-logo-container { 
+.sidebar-title {
+  font-size: 25px;
+  text-align: center;
+  margin-bottom: 1.5rem; /* Space below title */
+  padding: 1rem 0; /* Vertical padding */
+}
+
+.sidebar-menu {
   display: flex;
-  justify-content: center; 
-  width: 100%; 
+  flex-direction: column;
+  padding: 0.5rem; /* Padding inside menu */
 }
 
-.navbar-logo {
-  height: 150px;
+.sidebar-item {
+  text-align: center;
+  margin-bottom: 0.5rem; /* Space between items */
+  padding: 0.75rem 1rem; /* Padding inside buttons */
+  background-color: transparent; /* Transparent background */
+  border: none;
+  color: white; /* White text */
+  cursor: pointer;
+  width: 100%; /* Full width of sidebar */
+  margin-top: 50px;
 }
 
+.sidebar-item:hover {
+  background-color: rgba(255, 255, 255, 0.1); /* Subtle hover effect */
+}
+
+/* Main Content Area */
 .main-content {
-  flex-grow: 1;
-  background-color: #f8f9fa;
+  flex-grow: 1; /* Take up remaining space */
+  background-color: #f8f9fa; /* Light background */
   display: flex;
   flex-direction: column;
 }
 
-.content-area {
-  flex-grow: 1;
-  padding: 20px;
+/* Top Navigation Bar */
+.navbar-custom {
+  width: 100%;
+  height: 111px; /* Fixed height */
+  background-color: rgb(89, 171, 225); /* Light blue background */
+  display: flex;
+  justify-content: space-between; /* Space logo and user icon */
+  align-items: center; /* Vertical alignment */
+  padding: 0 1rem; /* Padding inside navbar */
 }
 
-/* Container styles - matching sidebar color */
+.navbar-logo-container {
+  display: flex;
+  justify-content: center; /* Center logo */
+  width: 100%; /* Full width */
+}
+
+.navbar-logo {
+  height: 130px; /* Fixed height for logo */
+}
+
+/* Content Area Inside Main Content */
+.content-area {
+  flex-grow: 1; /* Take up remaining space */
+  padding: 20px; /* Padding inside content area */
+}
+
+/* Content Containers (Home, Attendance, etc.) */
+.content-container {
+  display: flex;
+  justify-content: center; /* Center content horizontally */
+  align-items: center; /* Center content vertically */
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+}
+
+/* General Container Styles */
 .container-section {
   display: flex;
-  flex-wrap: wrap; 
-  gap: 20px;
+  flex-wrap: wrap; /* Allow wrapping of containers */
+  gap: 20px; /* Space between containers */
 }
 
 .container {
   background-color: #343a40; /* Match sidebar color */
-  color: white; /* Ensure text is visible on dark background */
-  border-radius: 8px;
-  padding: 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  flex: 1 0 200px; 
+  color: white; /* White text */
+  border-radius: 8px; /* Rounded corners */
+  padding: 20px; /* Padding inside containers */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  flex: 1 0 200px; /* Flexible sizing */
+}
+
+/* Responsive Adjustments (Example) */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 20%; /* Increase sidebar width on smaller screens */
+  }
+
+  .navbar-logo {
+    height: 100px; /* Adjust logo size */
+  }
+}
+
+/* doctordash.css */
+.user-dropdown {
+  position: relative;
+}
+
+.user-dropdown-button-rectangle {
+  background-color: #b42a2a;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.user-dropdown-content-rectangle {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: rgb(5, 4, 4);
+  border: 1px solid #ccc;
+  padding: 10px;
+  z-index: 1;
+  min-width: 150px;
+  text-align: left;
+  border-radius: 5px;
+}
+
+.dropdown-rectangle-button {
+  display: block;
+  width: 100%;
+  border: none;
+  background: none;
+  padding: 8px 10px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.dropdown-rectangle-button:hover {
+  background-color: #f0f0f0;
 }

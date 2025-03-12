@@ -1,0 +1,76 @@
+.flex-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.box {
+  flex: 1;
+  min-width: 300px; /* Ensures responsiveness */
+  max-width: 32%; /* Limits width to fit three boxes in a row */
+  padding: 15px;
+  box-sizing: border-box;
+}
+
+.attendance-records-box {
+  overflow-x: auto;
+}
+
+.pie-chart-container, .chart-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.attendance-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.attendance-table th,
+.attendance-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.attendance-table th {
+  background-color: #f2f2f2;
+}
+
+.pie-chart-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 30%; 
+}
+
+.flex-row {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%; /* Ensure flex-row takes full width */
+}
+
+.flex-row .box {
+  width: 45%;
+  margin: 10px;
+}
+
+/* Add styles for the chart row */
+.chart-box {
+  width: 80%; /* Chart box takes 80% width */
+  max-width: 600px;
+  margin: 20px auto; /* Center the chart box */
+  border: 1px solid #ccc;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.attendance-details {
+  font-size: 1.2rem; /* Increases text size */
+  font-weight: bold;
+  color:lightcoral;
+}

@@ -1,27 +1,71 @@
-import React, { useState } from "react";
-import { FaUserCircle } from "react-icons/fa";
+import React, { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./doctordash.css";
+import BootstrapPieChart from "../dashboard/widget/pie"
 import img from "../../images/Screenshot_2025-02-26_135248-removebg-preview.png";
+import {
+  auth,
+  getFirestore,
+  doc,
+  getDoc,
+} from "../Login/firebase/firebase";
+import { useNavigate } from "react-router-dom";
+import RectangleBox from "../doctor/attadence";
+import { FaUserMd } from "react-icons/fa"; // Import the doctor icon
+import DoctorAttendance from "../doctor/docdetail"
+const tabVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.3 } },
+};
 
-const Home = () => <div className="content-container">Home Content</div>;
+const Home = () => <motion.div variants={tabVariants}>Home Content</motion.div>;
 const Attendance = () => (
-  <div className="content-container">Attendance Content</div>
+  <motion.div variants={tabVariants}>Attendance Content</motion.div>
 );
-const Report = () => <div className="content-container">Report Content</div>;
+const Report = () => (
+  <motion.div variants={tabVariants}>Report Content</motion.div>
+);
 const PatientDetails = () => (
-  <div className="content-container">Patient Details Content</div>
+  <motion.div variants={tabVariants}>Patient Details Content</motion.div>
 );
 
 const HealthConnectDashboard = () => {
   const [activeTab, setActiveTab] = useState("Home");
+  const [userProfileName, setUserProfileName] = useState("");
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchUserProfileName = async () => {
+      const user = auth.currentUser;
+      if (user) {
+        const db = getFirestore();
+        const userDoc = await getDoc(doc(db, "doctors", user.uid));
+        setUserProfileName(
+          userDoc.exists() ? userDoc.data().name || "User" : "User"
+        );
+      }
+    };
+    fetchUserProfileName();
+  }, []);
 
   const renderContent = () => {
     switch (activeTab) {
       case "Home":
-        return <Home />;
+        return (
+          <>
+            <DoctorAttendance />
+            
+          </>
+        );
       case "Attendance":
-        return <Attendance />;
+        return (
+          <>
+            <RectangleBox />
+          </>
+        );
       case "Report":
         return <Report />;
       case "PatientDetails":
@@ -31,48 +75,101 @@ const HealthConnectDashboard = () => {
     }
   };
 
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [dropdownRef]);
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      navigate("/");
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
+  };
+
   return (
-    <div className="dashboard-container">
-      {/* Sidebar */}
-      <div className="sidebar">
-        <h2 className="sidebar-title">Doctor Dashboard</h2>
-        <div className="sidebar-menu">
-          <button className="sidebar-item" onClick={() => setActiveTab("Home")}>
-            Home
-          </button>
-          <button
-            className="sidebar-item"
-            onClick={() => setActiveTab("Attendance")}
-          >
-            Attendance
-          </button>
-          <button
-            className="sidebar-item"
-            onClick={() => setActiveTab("Report")}
-          >
-            Report
-          </button>
-          <button
-            className="sidebar-item"
-            onClick={() => setActiveTab("PatientDetails")}
-          >
-            Patient Details
-          </button>
+    <div className="dashboard-container d-flex">
+      <div className="sidebar d-flex flex-column">
+        <h2 className="sidebar-title text-center mb-4">Doctor Dashboard</h2>
+        <div className="sidebar-menu d-flex flex-column">
+          {["Home", "Attendance", "Report", "PatientDetails"].map((tab) => (
+            <motion.button
+              key={tab}
+              className="sidebar-item text-center mb-2"
+              onClick={() => setActiveTab(tab)}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0, transition: { duration: 0.3 } }}
+            >
+              {tab}
+            </motion.button>
+          ))}
         </div>
       </div>
 
-      {/* Main Content */}
-      <div className="main-content">
-        {/* Top Navigation Bar */}
-        <div className="navbar-custom">
+      <div className="main-content d-flex flex-column">
+        <div className="navbar-custom d-flex justify-content-between align-items-center">
           <div className="navbar-logo-container">
             <img src={img} alt="Health Connect" className="navbar-logo" />
           </div>
-          <FaUserCircle className="fs-1 text-dark" />
+          <div className="user-dropdown" ref={dropdownRef}>
+            <motion.button
+              className="user-dropdown-button-rectangle d-flex align-items-center" // Add d-flex and align-items-center
+              onClick={toggleDropdown}
+              whileHover={{ scale: 1.05 }}
+            >
+              <FaUserMd className="me-2" /> {/* Doctor icon here */}
+              {userProfileName}
+            </motion.button>
+            <AnimatePresence>
+              {isDropdownOpen && (
+                <motion.div
+                  className="user-dropdown-content-rectangle"
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                >
+                  <button
+                    onClick={handleLogout}
+                    className="dropdown-rectangle-button"
+                  >
+                    Logout
+                  </button>
+                  <button className="dropdown-rectangle-button">
+                    Settings
+                  </button>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
         </div>
-
-        {/* Content Area */}
-        <main className="content-area">{renderContent()}</main>
+        <main className="content-area flex-grow-1">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeTab}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.3 }}
+            >
+              {renderContent()}
+            </motion.div>
+          </AnimatePresence>
+        </main>
       </div>
     </div>
   );
