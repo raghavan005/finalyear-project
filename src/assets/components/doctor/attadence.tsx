@@ -36,8 +36,8 @@ const Box: React.FC<BoxProps> = ({
 
   // Coimbatore location coordinates and radius
   const coimbatoreLocation = {
-    latitude: 11.0198784,
-    longitude: 77.0113536,
+    latitude: 10.999224,
+    longitude: 77.084055,
     radius: 5000, // 5000 meters (5 kilometers) - Adjust as needed
   };
 

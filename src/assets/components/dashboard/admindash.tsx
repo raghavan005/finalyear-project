@@ -1,73 +1,135 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import "bootstrap/dist/css/bootstrap.min.css";
-import {
-  FaHome,
-  FaUserMd,
-  FaUser,
-  FaFileAlt,
-  FaSignOutAlt,
-} from "react-icons/fa";
+import { FaUserMd } from "react-icons/fa";
 import {
   auth,
   getFirestore,
-  collection,
+  doc,
+  getDoc,
   getDocs,
+  collection,
 } from "../Login/firebase/firebase";
-import { signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
+import img from "../../images/Screenshot_2025-02-26_135248-removebg-preview.png";
+import { signOut } from "firebase/auth"; // Import signOut
+import TamilNaduDistricts from "../admin/District"
 
-interface DoctorDetails {
-  uid: string;
-  name?: string;
-  age?: string;
-  gender?: string;
-  mobileNumber?: string;
-  district?: string;
-  city?: string;
-  hospital?: string;
-  specialization?: string;
-  experience?: string;
-}
-
-const Dashboard: React.FC = () => {
-  const [user, setUser] = useState<any>(null);
-  const [allDoctors, setAllDoctors] = useState<DoctorDetails[]>([]);
-  const [loadingDoctors, setLoadingDoctors] = useState(true);
+const HealthConnectDashboard = () => {
+  const [activeTab, setActiveTab] = useState("Home");
+  const [userProfileName, setUserProfileName] = useState("");
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
   const navigate = useNavigate();
+  const [doctorDataList, setDoctorDataList] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(async (user) => {
-      setUser(user);
+    const fetchUserProfileName = async () => {
+      const user = auth.currentUser;
       if (user) {
-        await fetchAllDoctors();
-      } else {
-        setLoadingDoctors(false);
+        const db = getFirestore();
+        const userDoc = await getDoc(doc(db, "doctors", user.uid));
+        setUserProfileName(
+          userDoc.exists() ? userDoc.data().name || "User" : "User"
+        );
       }
-    });
-
-    return () => unsubscribe();
+    };
+    fetchUserProfileName();
   }, []);
 
-  const fetchAllDoctors = async () => {
-    setLoadingDoctors(true);
-    try {
-      const db = getFirestore();
-      const doctorsCollection = collection(db, "doctors");
-      const querySnapshot = await getDocs(doctorsCollection);
+  useEffect(() => {
+    const fetchDoctorsData = async () => {
+      setLoading(true);
+      setError(null);
 
-      const doctorsList: DoctorDetails[] = [];
-      querySnapshot.forEach((doc) => {
-        doctorsList.push({ uid: doc.id, ...doc.data() } as DoctorDetails);
-      });
+      try {
+        const db = getFirestore();
+        const doctorsCollection = collection(db, "doctors");
+        const querySnapshot = await getDocs(doctorsCollection);
+        const doctors = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setDoctorDataList(doctors);
+      } catch (e) {
+        setError("Error fetching doctors data: " + e.message);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-      setAllDoctors(doctorsList);
-    } catch (error) {
-      console.error("Error fetching all doctor details:", error);
-      setAllDoctors([]);
-    } finally {
-      setLoadingDoctors(false);
+    fetchDoctorsData();
+  }, []);
+
+  const renderContent = () => {
+    switch (activeTab) {
+      case "Home":
+        return (
+          <>
+            {loading && <div>Loading...</div>}
+            {error && <div>{error}</div>}
+            {!loading && !error && (
+              <table className="table">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Gender</th>
+                    <th>Mobile Number</th>
+                    <th>District</th>
+                    <th>City</th>
+                    <th>Hospital</th>
+                    <th>Specialization</th>
+                    <th>Experience</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {doctorDataList.map((doctor) => (
+                    <tr key={doctor.id}>
+                      <td>{doctor.name}</td>
+                      <td>{doctor.age}</td>
+                      <td>{doctor.gender}</td>
+                      <td>{doctor.mobileNumber}</td>
+                      <td>{doctor.district}</td>
+                      <td>{doctor.city}</td>
+                      <td>{doctor.hospital}</td>
+                      <td>{doctor.specialization}</td>
+                      <td>{doctor.experience}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
+          </>
+        );
+      case "District Attendance":
+        return <div><TamilNaduDistricts /></div>;
+      case "Report":
+        return <div>Report Content</div>;
+      case "PatientDetails":
+        return <div>Patient Details Content</div>;
+      default:
+        return <div>Home Content</div>;
     }
   };
+
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [dropdownRef]);
 
   const handleLogout = async () => {
     try {
@@ -78,110 +140,80 @@ const Dashboard: React.FC = () => {
     }
   };
 
-  if (!user) {
-    return (
-      <div className="vh-100 d-flex justify-content-center align-items-center">
-        <div className="spinner-border text-primary" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <div className="d-flex">
-      {/* Sidebar */}
-      <div className="sidebar bg-dark text-white p-3 vh-100 d-flex flex-column">
-        <h3 className="mb-4 text-center">Admin Dashboard</h3>
-        <ul className="nav flex-column">
-          <li className="nav-item">
-            <a
-              href="#"
-              className="nav-link text-white d-flex align-items-center"
+    <div className="dashboard-container d-flex">
+      <div className="sidebar d-flex flex-column">
+        <h2 className="sidebar-title text-center mb-4">Admin Dashboard</h2>
+        <div className="sidebar-menu d-flex flex-column">
+          {["Home", "District Attendance", "Report", "PatientDetails"].map((tab) => (
+            <motion.button
+              key={tab}
+              className="sidebar-item text-center mb-2"
+              onClick={() => setActiveTab(tab)}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0, transition: { duration: 0.3 } }}
             >
-              <FaHome className="me-2" /> Home
-            </a>
-          </li>
-          <li className="nav-item">
-            <a
-              href="#"
-              className="nav-link text-white d-flex align-items-center"
-            >
-              <FaUserMd className="me-2" /> Appointments
-            </a>
-          </li>
-          <li className="nav-item">
-            <a
-              href="#"
-              className="nav-link text-white d-flex align-items-center"
-            >
-              <FaUser className="me-2" /> Patients
-            </a>
-          </li>
-          <li className="nav-item">
-            <a
-              href="#"
-              className="nav-link text-white d-flex align-items-center"
-            >
-              <FaFileAlt className="me-2" /> Reports
-            </a>
-          </li>
-        </ul>
-        <button
-          className="btn btn-danger mt-auto w-100 d-flex align-items-center justify-content-center"
-          onClick={handleLogout}
-        >
-          <FaSignOutAlt className="me-2" /> Logout
-        </button>
+              {tab}
+            </motion.button>
+          ))}
+        </div>
       </div>
 
-      {/* Main Content */}
-      <div className="container p-4 flex-grow-1">
-        <div className="d-flex justify-content-between align-items-center mb-4">
-          <h2>Welcome, {user.email}</h2>
+      <div className="main-content d-flex flex-column">
+        <div className="navbar-custom d-flex justify-content-between align-items-center">
+          <div className="navbar-logo-container">
+            <img src={img} alt="Health Connect" className="navbar-logo" />
+          </div>
+          <div className="user-dropdown" ref={dropdownRef}>
+            <motion.button
+              className="user-dropdown-button-rectangle d-flex align-items-center"
+              onClick={toggleDropdown}
+              whileHover={{ scale: 1.05 }}
+            >
+              <FaUserMd className="me-2" />
+              {userProfileName}
+            </motion.button>
+            <AnimatePresence>
+              {isDropdownOpen && (
+                <motion.div
+                  className="user-dropdown-content-rectangle"
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                >
+                  <button
+                    onClick={handleLogout}
+                    className="dropdown-rectangle-button"
+                  >
+                    Logout
+                  </button>
+                  <button className="dropdown-rectangle-button">
+                    Settings
+                  </button>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
         </div>
 
-        {/* All Doctor Details Section */}
-        <div className="mb-4">
-          <h4 className="mb-3">All Doctor Details</h4>
-          {loadingDoctors ? (
-            <div className="text-center">
-              <div className="spinner-border text-primary" role="status">
-                <span className="visually-hidden">
-                  Loading doctor details...
-                </span>
-              </div>
-            </div>
-          ) : (
-            <div className="table-responsive">
-              <table className="table table-striped table-hover">
-                <thead className="table-dark">
-                  <tr>
-                    <th>Name</th>
-                    <th>Specialization</th>
-                    <th>Mobile</th>
-                    <th>Hospital</th>
-                    <th>Experience</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {allDoctors.map((doctor) => (
-                    <tr key={doctor.uid}>
-                      <td>{doctor.name || "N/A"}</td>
-                      <td>{doctor.specialization || "N/A"}</td>
-                      <td>{doctor.mobileNumber || "N/A"}</td>
-                      <td>{doctor.hospital || "N/A"}</td>
-                      <td>{doctor.experience || "N/A"} years</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
-        </div>
+        <main className="content-area flex-grow-1">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeTab}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.3 }}
+            >
+              {renderContent()}
+            </motion.div>
+          </AnimatePresence>
+        </main>
       </div>
     </div>
   );
 };
 
-export default Dashboard;
+export default HealthConnectDashboard;
