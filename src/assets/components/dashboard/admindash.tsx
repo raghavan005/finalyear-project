@@ -14,7 +14,7 @@ import { useNavigate } from "react-router-dom";
 import img from "../../images/Screenshot_2025-02-26_135248-removebg-preview.png";
 import { signOut } from "firebase/auth"; // Import signOut
 import TamilNaduDistricts from "../admin/District"
-
+import MessageDisplay from "../doctor/currentshift";
 const HealthConnectDashboard = () => {
   const [activeTab, setActiveTab] = useState("Home");
   const [userProfileName, setUserProfileName] = useState("");
@@ -107,7 +107,11 @@ const HealthConnectDashboard = () => {
       case "District Attendance":
         return <div><TamilNaduDistricts /></div>;
       case "Report":
-        return <div>Report Content</div>;
+          return (
+            <>
+              <MessageDisplay />
+            </>
+          );
       case "PatientDetails":
         return <div>Patient Details Content</div>;
       default:
