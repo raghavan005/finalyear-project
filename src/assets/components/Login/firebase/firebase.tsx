@@ -18,7 +18,9 @@ import {
   serverTimestamp,
   query,
   where,
-  onSnapshot
+  onSnapshot,
+  orderBy,
+  Timestamp
 } from "firebase/firestore"; // Import Firestore functions
 
 // Your web app's Firebase configuration
@@ -52,4 +54,6 @@ export {
   query,
   where,
   onSnapshot,
+  orderBy,
+  Timestamp
 };

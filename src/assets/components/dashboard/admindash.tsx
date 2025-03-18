@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { FaUserMd } from "react-icons/fa";
+import { FaUserMd, FaBell } from "react-icons/fa"; // Import FaBell for notifications
+import LeaveReport from "../doctor/LeaveReport";
 import {
   auth,
   getFirestore,
@@ -13,8 +14,9 @@ import {
 import { useNavigate } from "react-router-dom";
 import img from "../../images/Screenshot_2025-02-26_135248-removebg-preview.png";
 import { signOut } from "firebase/auth"; // Import signOut
-import TamilNaduDistricts from "../admin/District"
+import TamilNaduDistricts from "../admin/District";
 import MessageDisplay from "../doctor/currentshift";
+
 const HealthConnectDashboard = () => {
   const [activeTab, setActiveTab] = useState("Home");
   const [userProfileName, setUserProfileName] = useState("");
@@ -24,6 +26,13 @@ const HealthConnectDashboard = () => {
   const [doctorDataList, setDoctorDataList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isNotificationsOpen, setIsNotificationsOpen] = useState(false); // State for notifications dropdown
+  const notificationsRef = useRef(null); // Ref for notifications dropdown
+  const [notifications, setNotifications] = useState([
+    { id: 1, message: "New doctor registered!", read: false },
+    { id: 2, message: "Leave request pending.", read: false },
+    { id: 3, message: "Shift change request.", read: false },
+  ]);
 
   useEffect(() => {
     const fetchUserProfileName = async () => {
@@ -105,15 +114,23 @@ const HealthConnectDashboard = () => {
           </>
         );
       case "District Attendance":
-        return <div><TamilNaduDistricts /></div>;
-      case "Report":
-          return (
-            <>
-              <MessageDisplay />
-            </>
-          );
-      case "PatientDetails":
-        return <div>Patient Details Content</div>;
+        return (
+          <div>
+            <TamilNaduDistricts />
+          </div>
+        );
+      case "Attendance-Report":
+        return (
+          <>
+            <MessageDisplay />
+          </>
+        );
+      case "LeaveReport":
+        return (
+          <>
+            <LeaveReport />
+          </>
+        );
       default:
         return <div>Home Content</div>;
     }
@@ -123,17 +140,27 @@ const HealthConnectDashboard = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
+  const toggleNotifications = () => {
+    setIsNotificationsOpen(!isNotificationsOpen);
+  };
+
   useEffect(() => {
     function handleClickOutside(event) {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setIsDropdownOpen(false);
+      }
+      if (
+        notificationsRef.current &&
+        !notificationsRef.current.contains(event.target)
+      ) {
+        setIsNotificationsOpen(false);
       }
     }
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [dropdownRef]);
+  }, [dropdownRef, notificationsRef]);
 
   const handleLogout = async () => {
     try {
@@ -144,24 +171,34 @@ const HealthConnectDashboard = () => {
     }
   };
 
+  const markNotificationAsRead = (id) => {
+    setNotifications((prevNotifications) =>
+      prevNotifications.map((notification) =>
+        notification.id === id ? { ...notification, read: true } : notification
+      )
+    );
+  };
+
   return (
     <div className="dashboard-container d-flex">
       <div className="sidebar d-flex flex-column">
         <h2 className="sidebar-title text-center mb-4">Admin Dashboard</h2>
         <div className="sidebar-menu d-flex flex-column">
-          {["Home", "District Attendance", "Report", "PatientDetails"].map((tab) => (
-            <motion.button
-              key={tab}
-              className="sidebar-item text-center mb-2"
-              onClick={() => setActiveTab(tab)}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0, transition: { duration: 0.3 } }}
-            >
-              {tab}
-            </motion.button>
-          ))}
+          {["Home", "District Attendance", "Attendance-Report", "LeaveReport"].map(
+            (tab) => (
+              <motion.button
+                key={tab}
+                className="sidebar-item text-center mb-2"
+                onClick={() => setActiveTab(tab)}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0, transition: { duration: 0.3 } }}
+              >
+                {tab}
+              </motion.button>
+            )
+          )}
         </div>
       </div>
 
@@ -170,35 +207,68 @@ const HealthConnectDashboard = () => {
           <div className="navbar-logo-container">
             <img src={img} alt="Health Connect" className="navbar-logo" />
           </div>
-          <div className="user-dropdown" ref={dropdownRef}>
-            <motion.button
-              className="user-dropdown-button-rectangle d-flex align-items-center"
-              onClick={toggleDropdown}
-              whileHover={{ scale: 1.05 }}
-            >
-              <FaUserMd className="me-2" />
-              {userProfileName}
-            </motion.button>
-            <AnimatePresence>
-              {isDropdownOpen && (
-                <motion.div
-                  className="user-dropdown-content-rectangle"
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                >
-                  <button
-                    onClick={handleLogout}
-                    className="dropdown-rectangle-button"
+          <div className="d-flex align-items-center">
+            <div className="user-dropdown" ref={notificationsRef}>
+              <motion.button
+                className="user-dropdown-button-rectangle d-flex align-items-center me-3"
+                onClick={toggleNotifications}
+                whileHover={{ scale: 1.05 }}
+              >
+                <FaBell className="me-0" />
+              </motion.button>
+              <AnimatePresence>
+                {isNotificationsOpen && (
+                  <motion.div
+                    className="user-dropdown-content-rectangle"
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
                   >
-                    Logout
-                  </button>
-                  <button className="dropdown-rectangle-button">
-                    Settings
-                  </button>
-                </motion.div>
-              )}
-            </AnimatePresence>
+                    {notifications.map((notification) => (
+                      <div
+                        key={notification.id}
+                        className={`notification-item ${
+                          notification.read ? "read" : ""
+                        }`}
+                        onClick={() => markNotificationAsRead(notification.id)}
+                      >
+                        {notification.message}
+                      </div>
+                    ))}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+            <div className="user-dropdown" ref={dropdownRef}>
+              <motion.button
+                className="user-dropdown-button-rectangle d-flex align-items-center"
+                onClick={toggleDropdown}
+                whileHover={{ scale: 1.05 }}
+              >
+                <FaUserMd className="me-2" />
+                {userProfileName}
+              </motion.button>
+              <AnimatePresence>
+                {isDropdownOpen && (
+                  <motion.div
+                    className="user-dropdown-content-rectangle"
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                  >
+                    <button
+                      onClick={handleLogout}
+                      className="dropdown-rectangle-button"
+                    >
+                      Logout
+                    </button>
+                    <button className="dropdown-rectangle-button">
+                      Settings
+                    </button>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
           </div>
         </div>
 

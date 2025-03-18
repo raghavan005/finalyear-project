@@ -2,8 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./doctordash.css";
-import BootstrapPieChart from "../dashboard/widget/pie"
 import img from "../../images/Screenshot_2025-02-26_135248-removebg-preview.png";
+import RegisterLeave from "../doctor/registerleave"
 import {
   auth,
   getFirestore,
@@ -14,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 import RectangleBox from "../doctor/attadence";
 import { FaUserMd } from "react-icons/fa"; // Import the doctor icon
 import DoctorAttendance from "../doctor/docdetail"
+import { signOut } from "firebase/auth";
 const tabVariants = {
   hidden: { opacity: 0, y: 20 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.3 } },
@@ -64,6 +65,7 @@ const HealthConnectDashboard = () => {
         return (
           <>
             <RectangleBox />
+            <RegisterLeave />
           </>
         );
       case "Report":
@@ -91,14 +93,14 @@ const HealthConnectDashboard = () => {
     };
   }, [dropdownRef]);
 
-  const handleLogout = async () => {
-    try {
-      await signOut(auth);
-      navigate("/");
-    } catch (error) {
-      console.error("Logout failed:", error);
-    }
-  };
+    const handleLogout = async () => {
+       try {
+         await signOut(auth);
+         navigate("/");
+       } catch (error) {
+         console.error("Logout failed:", error);
+       }
+     };
 
   return (
     <div className="dashboard-container d-flex">

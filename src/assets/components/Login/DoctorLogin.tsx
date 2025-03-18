@@ -77,7 +77,7 @@ const DoctorLogin: React.FC = () => {
   };
 
   const handleRegisterClick = () => {
-    navigate("/register", { state: { from: "doctor" } });
+    navigate("/doctor/register"); // Navigate directly to DoctorRegister
   };
 
   return (

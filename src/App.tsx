@@ -6,7 +6,8 @@ import DoctorLogin from "./assets/components/Login/DoctorLogin";
 import Dashboard from "./assets/components/dashboard/admindash";
 import Register from "./assets/components/Login/register";
 import DoctorDash from "./assets/components/dashboard/doctordash";
-import DoctorDetails from "./assets/components/dashboard/doctordetails"; // Import DoctorDetails
+import DoctorDetails from "./assets/components/dashboard/doctordetails";
+import DoctorRegisterForm from "./assets/components/Login/doctorregister"; // Corrected import path
 
 const App: React.FC = () => {
   return (
@@ -16,10 +17,11 @@ const App: React.FC = () => {
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route path="/doctor/login" element={<DoctorLogin />} />
         <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/doctor-details" element={<DoctorDetails />} />{" "}
+        <Route path="/doctor-details" element={<DoctorDetails />} />
         <Route path="/doctor-dashboard" element={<DoctorDash />} />
-        {/* Add DoctorDetails route */}
         <Route path="/register" element={<Register />} />
+        <Route path="/doctor/register" element={<DoctorRegisterForm />} />{" "}
+        {/* Added DoctorRegister route */}
         <Route path="*" element={<div>404 Not Found</div>} />
       </Routes>
     </Router>
