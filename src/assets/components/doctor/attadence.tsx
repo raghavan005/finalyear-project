@@ -36,9 +36,9 @@ const Box: React.FC<BoxProps> = ({
 
   // Coimbatore location coordinates and radius
   const coimbatoreLocation = {
-    latitude: 11.050915,
-    longitude: 77.0333,
-    radius: 5000, // 5000 meters (5 kilometers) - Adjust as needed
+    latitude: 11.05028,
+    longitude: 77.03103,
+    radius: 50000, // 5000 meters (5 kilometers) - Adjust as needed
   };
 
   useEffect(() => {
@@ -283,9 +283,7 @@ const Box: React.FC<BoxProps> = ({
         </motion.button>
       </div>
     </div>
-    
   );
-  
 };
 
 const App: React.FC = () => {

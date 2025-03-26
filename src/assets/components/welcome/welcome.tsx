@@ -2,10 +2,10 @@ import React, { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { FaUserShield, FaUserMd, FaHeartbeat } from "react-icons/fa";
-import "./welcome.css"; // Import CSS file
-import logo from "../../images/Screenshot_2025-02-26_135248-removebg-preview.png"; // Import your logo
+import "./welcome.css";
+import logo from "../../images/Screenshot_2025-02-26_135248-removebg-preview.png";
 import VariableProximity from "./animation/BlurText";
-import Waves from "./animation/lightining/waves"; // Import the Waves component
+import Waves from "./animation/lightining/waves";
 
 const WelcomePage: React.FC = () => {
   const navigate = useNavigate();
@@ -13,7 +13,6 @@ const WelcomePage: React.FC = () => {
 
   return (
     <div className="welcome-container">
-      {/* Waves Background */}
       <div className="waves-background">
         <Waves
           lineColor="#fff"
