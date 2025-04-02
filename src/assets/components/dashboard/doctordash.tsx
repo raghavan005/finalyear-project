@@ -5,6 +5,7 @@ import "./doctordash.css";
 import img from "../../images/Screenshot_2025-02-26_135248-removebg-preview.png";
 import RegisterLeave from "../doctor/registerleave"
 import ReportContent from "../doctor/Report"
+import DoctorShiftReport from "../patients/Patient";
 import {
   auth,
   getFirestore,
@@ -59,7 +60,6 @@ const HealthConnectDashboard = () => {
         return (
           <>
             <DoctorAttendance />
-            
           </>
         );
       case "Attendance":
@@ -75,8 +75,8 @@ const HealthConnectDashboard = () => {
             <ReportContent />
           </>
         );
-      case "PatientDetails":
-        return <PatientDetails />;
+      case "Shift-Report":
+        return <DoctorShiftReport />;
       default:
         return <Home />;
     }
@@ -112,7 +112,7 @@ const HealthConnectDashboard = () => {
       <div className="sidebar d-flex flex-column">
         <h2 className="sidebar-title text-center mb-4">Doctor Dashboard</h2>
         <div className="sidebar-menu d-flex flex-column">
-          {["Home", "Attendance", "Report", "PatientDetails"].map((tab) => (
+          {["Home", "Attendance", "Report", "Shift-Report"].map((tab) => (
             <motion.button
               key={tab}
               className="sidebar-item text-center mb-2"

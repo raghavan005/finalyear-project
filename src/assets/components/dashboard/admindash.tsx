@@ -131,6 +131,13 @@ const HealthConnectDashboard = () => {
             <LeaveReport />
           </>
         );
+        case "Patient-Report":
+        return (
+          <div>
+            <h2>Patient Report</h2>
+            {/* Add your Patient Report component here */}
+          </div>
+        );
       default:
         return <div>Home Content</div>;
     }
@@ -189,6 +196,7 @@ const HealthConnectDashboard = () => {
             "District Attendance",
             "Attendance-Report",
             "LeaveReport",
+            "Patient-Report",
           ].map((tab) => (
             <motion.button
               key={tab}
