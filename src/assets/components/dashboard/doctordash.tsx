@@ -4,6 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./doctordash.css";
 import img from "../../images/Screenshot_2025-02-26_135248-removebg-preview.png";
 import RegisterLeave from "../doctor/registerleave"
+import ReportContent from "../doctor/Report"
 import {
   auth,
   getFirestore,
@@ -69,7 +70,11 @@ const HealthConnectDashboard = () => {
           </>
         );
       case "Report":
-        return <Report />;
+        return (
+          <>
+            <ReportContent />
+          </>
+        );
       case "PatientDetails":
         return <PatientDetails />;
       default:

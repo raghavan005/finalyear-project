@@ -30,13 +30,15 @@ const AdminDashboard: React.FC = () => {
       snapshot.docs.forEach((doc) => {
         const data = doc.data();
         const userId = data.userId;
-        const timestamp = data.timestamp.seconds;
-        const type = data.type; // "in" or "out"
+        const timestamp = data.timestamp?.seconds; // Use optional chaining
+        const type = data.type;
 
         // Store only the latest event per doctor
         if (
           !latestAttendance[userId] ||
-          timestamp > latestAttendance[userId].timestamp.seconds
+          (timestamp &&
+            latestAttendance[userId]?.timestamp?.seconds &&
+            timestamp > latestAttendance[userId].timestamp.seconds)
         ) {
           latestAttendance[userId] = data;
         }
@@ -44,11 +46,13 @@ const AdminDashboard: React.FC = () => {
 
       // Keep only doctors who are currently punched in
       const punchedInDoctors = Object.values(latestAttendance).filter(
-        (attendance) => attendance.type === "in"
+        (attendance) => attendance?.type === "in"
       );
 
       // Fetch doctor details
       const fetchDoctorData = async (attendance) => {
+        if (!attendance) return null; // Add null check for attendance
+
         const doctorQuery = query(
           doctorsRef,
           where("uid", "==", attendance.userId)
@@ -59,7 +63,7 @@ const AdminDashboard: React.FC = () => {
           return {
             name: doctorData.name,
             hospital: doctorData.hospital,
-            punchInTime: (attendance.timestamp as Timestamp).toDate(),
+            punchInTime: (attendance.timestamp as Timestamp)?.toDate(), // Use optional chaining
             location: attendance.location,
           };
         }
@@ -88,7 +92,6 @@ const AdminDashboard: React.FC = () => {
 
     return () => unsubscribe();
   }, []);
-
 
   if (loading) {
     return <div>Loading...</div>;

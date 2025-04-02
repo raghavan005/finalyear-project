@@ -4,6 +4,8 @@ import Stepper, { Step } from "../welcome/animation/stepper/stepper";
 import { getFirestore, doc, setDoc } from "../Login/firebase/firebase";
 import { auth } from "../Login/firebase/firebase";
 import { useNavigate } from "react-router-dom";
+import "./doctordetails.css"; // Import the CSS file
+import Hyperspeed from "./Hyperspeed";
 
 interface DoctorDetailsProps {}
 
@@ -72,12 +74,12 @@ const DoctorDetails: React.FC<DoctorDetailsProps> = () => {
 
   const hospitalsByCity: { [key: string]: string[] } = {
     "Chennai City": [
-      "Primary Health Center (Chennai City 1)",
-      "Primary Health Center (Chennai City 2)",
+      "Primary Health Center (T. Nagar)",
+      "Primary Health Center (Velachery)",
     ],
     "Coimbatore North": [
-      "Primary Health Center (Coimbatore North 1)",
-      "Primary Health Center (Coimbatore North 2)",
+      "Primary Health Center (Ukkadam)",
+      "Primary Health Center (Gandhipuram)",
     ],
   };
 
@@ -128,6 +130,7 @@ const DoctorDetails: React.FC<DoctorDetailsProps> = () => {
   };
 
   return (
+    
     <motion.div
       className="doctor-details-container"
       initial={{ opacity: 0, scale: 0.9 }}
@@ -143,128 +146,135 @@ const DoctorDetails: React.FC<DoctorDetailsProps> = () => {
         backButtonText="Previous"
         nextButtonText="Next"
       >
+        
         <Step>
-          <div className="form-group">
-            <label htmlFor="name">Name:</label>
-            <input
-              type="text"
-              id="name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="age">Age:</label>
-            <input
-              type="number"
-              id="age"
-              value={age}
-              onChange={(e) => setAge(e.target.value)}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="gender">Gender:</label>
-            <select
-              id="gender"
-              value={gender}
-              onChange={(e) => setGender(e.target.value)}
-              required
-            >
-              <option value="">Select Gender</option>
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-            </select>
-          </div>
-          <div className="form-group">
-            <label htmlFor="mobileNumber">Mobile Number:</label>
-            <input
-              type="tel"
-              id="mobileNumber"
-              value={mobileNumber}
-              onChange={(e) => setMobileNumber(e.target.value)}
-              required
-            />
+          <div className="form-group-grid">
+            <div className="form-group">
+              <label htmlFor="name">Name:</label>
+              <input
+                type="text"
+                id="name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="age">Age:</label>
+              <input
+                type="number"
+                id="age"
+                value={age}
+                onChange={(e) => setAge(e.target.value)}
+                required
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="gender">Gender:</label>
+              <select
+                id="gender"
+                value={gender}
+                onChange={(e) => setGender(e.target.value)}
+                required
+              >
+                <option value="">Select Gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+              </select>
+            </div>
+            <div className="form-group">
+              <label htmlFor="mobileNumber">Mobile Number:</label>
+              <input
+                type="tel"
+                id="mobileNumber"
+                value={mobileNumber}
+                onChange={(e) => setMobileNumber(e.target.value)}
+                required
+              />
+            </div>
           </div>
         </Step>
         <Step>
-          <div className="form-group">
-            <label htmlFor="district">District:</label>
-            <select
-              id="district"
-              value={district}
-              onChange={handleDistrictChange}
-              required
-            >
-              <option value="">Select District</option>
-              {tamilNaduDistricts.map((d) => (
-                <option key={d} value={d}>
-                  {d}
-                </option>
-              ))}
-            </select>
-          </div>
-          {district && (
+          <div className="form-group-grid">
             <div className="form-group">
-              <label htmlFor="city">City:</label>
+              <label htmlFor="district">District:</label>
               <select
-                id="city"
-                value={city}
-                onChange={handleCityChange}
+                id="district"
+                value={district}
+                onChange={handleDistrictChange}
                 required
               >
-                <option value="">Select City</option>
-                {citiesByDistrict[district]?.map((c) => (
-                  <option key={c} value={c}>
-                    {c}
+                <option value="">Select District</option>
+                {tamilNaduDistricts.map((d) => (
+                  <option key={d} value={d}>
+                    {d}
                   </option>
                 ))}
               </select>
             </div>
-          )}
-          {city && (
-            <div className="form-group">
-              <label htmlFor="hospital">Hospital:</label>
-              <select
-                id="hospital"
-                value={hospital}
-                onChange={(e) => setHospital(e.target.value)}
-                required
-              >
-                <option value="">Select Hospital</option>
-                {hospitalsByCity[city]?.map((h) => (
-                  <option key={h} value={h}>
-                    {h}
-                  </option>
-                ))}
-              </select>
-            </div>
-          )}
+            {district && (
+              <div className="form-group">
+                <label htmlFor="city">City:</label>
+                <select
+                  id="city"
+                  value={city}
+                  onChange={handleCityChange}
+                  required
+                >
+                  <option value="">Select City</option>
+                  {citiesByDistrict[district]?.map((c) => (
+                    <option key={c} value={c}>
+                      {c}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            )}
+            {city && (
+              <div className="form-group">
+                <label htmlFor="hospital">Hospital:</label>
+                <select
+                  id="hospital"
+                  value={hospital}
+                  onChange={(e) => setHospital(e.target.value)}
+                  required
+                >
+                  <option value="">Select Hospital</option>
+                  {hospitalsByCity[city]?.map((h) => (
+                    <option key={h} value={h}>
+                      {h}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            )}
+          </div>
         </Step>
         <Step>
-          <div className="form-group">
-            <label htmlFor="specialization">Specialization:</label>
-            <select
-              id="specialization"
-              value={specialization}
-              onChange={(e) => setSpecialization(e.target.value)}
-              required
-            >
-              <option value="">Select Specialization</option>
-              <option value="doctor">Doctor</option>
-              <option value="nurse">Nurse</option>
-            </select>
-          </div>
-          <div className="form-group">
-            <label htmlFor="experience">Experience:</label>
-            <input
-              type="number"
-              id="experience"
-              value={experience}
-              onChange={(e) => setExperience(e.target.value)}
-              required
-            />
+          <div className="form-group-grid">
+            <div className="form-group">
+              <label htmlFor="specialization">Specialization:</label>
+              <select
+                id="specialization"
+                value={specialization}
+                onChange={(e) => setSpecialization(e.target.value)}
+                required
+              >
+                <option value="">Select Specialization</option>
+                <option value="doctor">Doctor</option>
+                <option value="nurse">Nurse</option>
+              </select>
+            </div>
+            <div className="form-group">
+              <label htmlFor="experience">Experience:</label>
+              <input
+                type="number"
+                id="experience"
+                value={experience}
+                onChange={(e) => setExperience(e.target.value)}
+                required
+              />
+            </div>
           </div>
         </Step>
         <Step>

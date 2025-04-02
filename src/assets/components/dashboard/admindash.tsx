@@ -180,25 +180,28 @@ const HealthConnectDashboard = () => {
   };
 
   return (
-    <div className="dashboard-container d-flex">
+    <div className="dashboard-container d-flex " style={{ minHeight: "100%" }}>
       <div className="sidebar d-flex flex-column">
         <h2 className="sidebar-title text-center mb-4">Admin Dashboard</h2>
         <div className="sidebar-menu d-flex flex-column">
-          {["Home", "District Attendance", "Attendance-Report", "LeaveReport"].map(
-            (tab) => (
-              <motion.button
-                key={tab}
-                className="sidebar-item text-center mb-2"
-                onClick={() => setActiveTab(tab)}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0, transition: { duration: 0.3 } }}
-              >
-                {tab}
-              </motion.button>
-            )
-          )}
+          {[
+            "Home",
+            "District Attendance",
+            "Attendance-Report",
+            "LeaveReport",
+          ].map((tab) => (
+            <motion.button
+              key={tab}
+              className="sidebar-item text-center mb-2"
+              onClick={() => setActiveTab(tab)}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0, transition: { duration: 0.3 } }}
+            >
+              {tab}
+            </motion.button>
+          ))}
         </div>
       </div>
 

@@ -1,75 +1,45 @@
-.doctor-details-container {
-  width: 40%;
-  margin: auto;
-  background: rgba(255, 255, 255, 0.1);
-  padding: 2rem;
-  border-radius: 15px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  text-align: center;
-  color: white;
-  backdrop-filter: blur(2px);
-  -webkit-backdrop-filter: blur(15px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-}
-
-.doctor-details-container h2 {
-  font-size: 24px;
-  margin-bottom: 1rem;
-  color: white;
-}
-
-.doctor-details-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+.form-group-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
 }
 
 .form-group {
-  text-align: left;
+  display: flex;
+  flex-direction: column;
 }
 
-label {
-  font-weight: bold;
-  display: block;
-  margin-bottom: 5px;
-  color: white !important;
+.form-group label {
+  margin-bottom: 4px;
+  color: black; /* Text color black */
 }
 
-input,
-select {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  border-radius: 5px;
-  color: black;
-  background: white; /* Changed input background to white */
-}
-
-input::placeholder {
-  color: #555;
-}
-
-.error-message {
-  color: red;
-  font-size: 14px;
+.form-group input,
+.form-group select {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  color: black; /* Text color black */
+  background-color: white; /* Added background color white */
 }
 
 .submit-button {
-  background: rgb(79, 172, 254);
-  color: white;
   padding: 10px;
+  background-color: blue;
+  color: white;
+  border-radius: 5px;
   border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: 0.3s;
 }
 
-.submit-button:hover {
-  background: rgba(0, 198, 255, 0.8);
+/* Stepper Styling */
+.stepper-container {
+  color: black; /* Text color black */
 }
 
-.submit-button:disabled {
-  background: gray;
-  cursor: not-allowed;
+.stepper-container .step-label {
+  color: black; /* Text color black */
+}
+
+.stepper-container .step-content {
+  color: black; /* Text color black */
 }

@@ -1,0 +1,160 @@
+.register-leave-container {
+  display: fixed; /* Use flexbox for centering */
+  margin-top: 10px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 10vh; /* Make it full viewport height */
+  background-color: #f3f4f6;
+  padding: 1rem;
+}
+
+.register-leave-card {
+  width: 100%;
+  max-width: 2xl;
+  background-color: white;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.register-leave-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.register-leave-error {
+  color: red;
+  text-align: center;
+}
+
+.doctor-details {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  background-color: #f9fafb;
+}
+
+.no-details {
+  text-align: center;
+}
+
+.register-leave-button-container {
+  display: flex;
+  justify-content: center;
+}
+
+.register-leave-button {
+  background-color: #3b82f6;
+  color: white;
+  font-weight: bold;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.register-leave-button:hover {
+  background-color: #2563eb;
+}
+
+.register-leave-popup {
+  position: fixed; /* Use fixed positioning */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  display: flex; /* Use flexbox for centering */
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Ensure it's on top */
+}
+
+.register-leave-popup-content {
+  background-color: rgba(255, 255, 255, 0.5); /* Semi-transparent white background */
+  padding: 2rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  width: 90%;
+  max-width: 600px;
+  backdrop-filter: blur(10px); /* Apply the glassmorphism blur */
+  border: 1px solid rgba(255, 255, 255, 0.3); /* Add a subtle border */
+}
+
+.register-leave-popup-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.leave-date-input,
+.leave-reason-input {
+  margin-bottom: 1rem;
+}
+
+.leave-label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.leave-date-picker,
+.leave-reason-textarea {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #e5e7eb;
+  border-color: #374151;
+  border-radius: 0.25rem;
+  background-color: white; /* White background */
+  color: black; /* Black text */
+}
+
+.leave-reason-textarea {
+  resize: vertical; /* Allow vertical resizing */
+}
+
+.popup-button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+.submit-button,
+.cancel-button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  font-weight: bold;
+  margin: 0 0.5rem;
+}
+
+.submit-button {
+  background-color: #3b82f6;
+  color: white;
+}
+
+.submit-button:hover {
+  background-color: #2563eb;
+}
+
+.disabled-button {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.cancel-button {
+  background-color: #e5e7eb;
+  color: #374151;
+}
+
+.cancel-button:hover {
+  background-color: #d1d5db;
+}

@@ -20,7 +20,8 @@ import {
   where,
   onSnapshot,
   orderBy,
-  Timestamp
+  Timestamp,
+  updateDoc,
 } from "firebase/firestore"; // Import Firestore functions
 
 // Your web app's Firebase configuration
@@ -55,5 +56,6 @@ export {
   where,
   onSnapshot,
   orderBy,
-  Timestamp
+  Timestamp,
+  updateDoc,
 };

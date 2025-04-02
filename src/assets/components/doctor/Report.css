@@ -1,0 +1,104 @@
+/* General Table Styles */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  font-family: sans-serif;
+}
+
+th,
+td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+/* Leave Report Specific Styles */
+.leave-report-container {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin: 20px auto;
+  max-width: 1200px;
+  overflow-x: auto;
+}
+
+.leave-report-container h2 {
+  font-size: 1.8em;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #333;
+}
+
+.leave-report-container p {
+  text-align: center;
+  color: #666;
+  margin-top: 20px;
+}
+
+/* Table Header Styles */
+th {
+  background-color: #e0e0e0;
+  color: #333;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.9em;
+}
+
+/* Table Row Styles */
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+tr:hover {
+  background-color: #e6f7ff;
+}
+
+/* Table Cell Styles */
+td {
+  color: #444;
+  font-size: 0.95em;
+}
+
+/* Status Styles */
+.status-accepted {
+  color: green;
+  font-weight: bold;
+}
+
+.status-rejected {
+  color: red;
+  font-weight: bold;
+}
+
+.status-pending {
+  color: orange;
+  font-weight: bold;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  th,
+  td {
+    padding: 6px;
+    font-size: 0.85em;
+  }
+}
+
+/* Date and Time Formatting */
+.date-time {
+  white-space: nowrap;
+}
+
+/* Error Message */
+.error {
+  color: red;
+  text-align: center;
+  margin-top: 20px;
+}
