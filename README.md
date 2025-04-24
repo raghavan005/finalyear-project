@@ -1,50 +1,60 @@
-# React + TypeScript + Vite
+# Health Connect
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Health Connect is a centralized digital platform designed to streamline real-time monitoring of doctor attendance, healthcare services, and absenteeism alerts for Public Health Centers (PHCs), Upgraded PHCs, and Sub Centres under the Deputy Director of Health Services (DDHS) in Tamil Nadu.
 
-Currently, two official plugins are available:
+## Table of Contents
+- [Overview](#overview)
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Installation](#installation)
+- [Usage](#usage)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Overview
+Health Connect aims to improve healthcare administration by providing a web dashboard for DDHS officials. The platform ensures seamless communication, real-time attendance tracking, and automated reports, enhancing efficiency in the healthcare system. By integrating real-time data and automated notifications, Health Connect ensures that healthcare services remain efficient and well-coordinated.
 
-## Expanding the ESLint configuration
+This project is developed to address key challenges in public healthcare administration, such as tracking doctor availability, monitoring patient flow, and identifying medical supply shortages in real time. The system reduces manual reporting efforts and enhances transparency, allowing authorities to make data-driven decisions.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Features
+### Web Dashboard (Admin Panel)
+- **Real-time Monitoring**: Displays all PHCs in Tamil Nadu along with available doctors based on attendance.
+- **Doctor Attendance Tracking**: Summarizes daily attendance, including leaves and absences.
+- **Patient Count Analytics**: Monitors daily patient visits at each center.
+- **Automated Alerts**: Sends notifications for absenteeism and other crucial updates.
+- **Comprehensive Records**: Stores doctor and patient details for easy reference.
+- **Medical Supply Reporting**: Allows doctors to report shortages and request necessary medical supplies.
 
-- Configure the top-level `parserOptions` property like this:
+## Tech Stack
+- **Frontend:** React (Web)
+- **Backend & Database:** Firebase
+- **Hosting:** Firebase Hosting / AWS (TBD)
+- **APIs:** Firebase Authentication
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+## Installation
+### Prerequisites
+Ensure you have the following installed:
+- Node.js and npm
+- Firebase CLI
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+### Setup
+1. Clone the repository:
+   ```sh
+   git clone https://github.com/yourusername/health-connect.git
+   ```
+2. Navigate to the project directory:
+   ```sh
+   cd health-connect
+   ```
+3. Install dependencies:
+   ```sh
+   npm install
+   ```
+4. Start the development server:
+   ```sh
+   npm run dev
+   ```
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+## Usage
+- **Admin Panel**: Open `http://localhost:5173` (or deployed URL) to access the dashboard.
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+---
+For any queries, please contact **[rragavan2004@gmail.com]**.
