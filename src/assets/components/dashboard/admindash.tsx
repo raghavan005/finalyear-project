@@ -16,6 +16,7 @@ import img from "../../images/Screenshot_2025-02-26_135248-removebg-preview.png"
 import { signOut } from "firebase/auth"; // Import signOut
 import TamilNaduDistricts from "../admin/District";
 import MessageDisplay from "../doctor/currentshift";
+import  AdminDoctorReports from "../patients/PatientReport"; // Import the component for patient reports
 
 const HealthConnectDashboard = () => {
   const [activeTab, setActiveTab] = useState("Home");
@@ -133,10 +134,9 @@ const HealthConnectDashboard = () => {
         );
         case "Patient-Report":
         return (
-          <div>
-            <h2>Patient Report</h2>
-            {/* Add your Patient Report component here */}
-          </div>
+          <>
+           < AdminDoctorReports />
+          </>
         );
       default:
         return <div>Home Content</div>;

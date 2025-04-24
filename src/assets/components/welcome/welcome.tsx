@@ -6,6 +6,7 @@ import "./welcome.css";
 import logo from "../../images/Screenshot_2025-02-26_135248-removebg-preview.png";
 import VariableProximity from "./animation/BlurText";
 import Waves from "./animation/lightining/waves";
+import { CircularProgress } from "@heroui/react";
 
 const WelcomePage: React.FC = () => {
   const navigate = useNavigate();

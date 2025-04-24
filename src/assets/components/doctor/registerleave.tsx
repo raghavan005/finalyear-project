@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import PixelCard from "../animation/pixelcard";
 import {
   getFirestore,
   collection,
@@ -125,7 +126,9 @@ const RegisterLeave: React.FC<RegisterLeaveProps> = ({
   };
 
   return (
+    
     <div className="register-leave-container">
+      
       <div className="register-leave-card">
         <h2 className="register-leave-title">Doctor Details</h2>
         {loading ? (
